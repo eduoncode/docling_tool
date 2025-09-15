@@ -7,10 +7,13 @@ import pytest
 
 
 def test_run_no_files(tmp_path, monkeypatch):
-    """Se não houver arquivos no input, run() deve retornar 0 e não falhar."""
+    """Se não houver ficheiros no input, run() deve retornar 0 e não falhar."""
     # Adicionar o caminho do package
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    from process import run
+    from src.main import run
+
+    rc = run(["--input", str(tmp_path / "in"), "--output", str(tmp_path / "out")])
+    assert rc == 0
 
     rc = run(["--input", str(tmp_path / "in"), "--output", str(tmp_path / "out")])
     assert rc == 0
@@ -29,7 +32,7 @@ class DummyConverter:
         return DummyDoc()
 
 
-@patch('process.build_converter')
+@patch('src.main.build_converter')
 def test_process_file_writes_markdown(mock_build_converter, tmp_path, monkeypatch):
     """Garante que um arquivo é processado e um .md é escrito."""
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -47,7 +50,7 @@ def test_process_file_writes_markdown(mock_build_converter, tmp_path, monkeypatc
     file_path.write_text("binarydata", encoding="utf-8")
 
     # importar depois de configurar o mock
-    from process import build_converter, process_file
+    from src.main import build_converter, process_file
 
     # executar
     converter = build_converter()
@@ -75,10 +78,10 @@ def test_process_file_with_different_extensions(tmp_path, monkeypatch):
     # Testar diferentes extensões
     extensions = [".pdf", ".docx", ".txt"]
     
-    with patch('process.build_converter') as mock_build_converter:
+    with patch('src.main.build_converter') as mock_build_converter:
         mock_build_converter.return_value = DummyConverter()
         
-        from process import build_converter, process_file
+        from src.main import build_converter, process_file
         
         converter = build_converter()
         
@@ -93,7 +96,7 @@ def test_process_file_with_different_extensions(tmp_path, monkeypatch):
             assert out.read_text(encoding="utf-8").startswith("# dummy")
 
 
-@patch('process.build_converter')
+@patch('src.main.build_converter')
 def test_run_with_files(mock_build_converter, tmp_path, monkeypatch):
     """Testa a função run com arquivos presentes."""
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -111,7 +114,7 @@ def test_run_with_files(mock_build_converter, tmp_path, monkeypatch):
     test_file = inp_dir / "test.pdf"
     test_file.write_text("test content", encoding="utf-8")
     
-    from process import run
+    from src.main import run
     
     # executar
     rc = run(["--input", str(inp_dir), "--output", str(out_dir)])
@@ -123,7 +126,7 @@ def test_run_with_files(mock_build_converter, tmp_path, monkeypatch):
     assert output_file.read_text(encoding="utf-8").startswith("# dummy")
 
 
-@patch('process.build_converter')
+@patch('src.main.build_converter')
 def test_run_verbose_mode(mock_build_converter, tmp_path, caplog):
     """Testa se o modo verbose funciona corretamente."""
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -141,7 +144,7 @@ def test_run_verbose_mode(mock_build_converter, tmp_path, caplog):
     test_file = inp_dir / "test.pdf"
     test_file.write_text("test content", encoding="utf-8")
     
-    from process import run
+    from src.main import run
     
     # executar com verbose
     with caplog.at_level(logging.DEBUG):
@@ -155,7 +158,7 @@ def test_run_verbose_mode(mock_build_converter, tmp_path, caplog):
            "test.pdf" in caplog.text
 
 
-@patch('process.build_converter')
+@patch('src.main.build_converter')
 def test_run_converter_build_failure(mock_build_converter, tmp_path):
     """Testa o comportamento quando build_converter falha."""
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -173,7 +176,7 @@ def test_run_converter_build_failure(mock_build_converter, tmp_path):
     test_file = inp_dir / "test.pdf"
     test_file.write_text("test content", encoding="utf-8")
     
-    from process import run
+    from src.main import run
     
     # executar
     rc = run(["--input", str(inp_dir), "--output", str(out_dir)])
@@ -182,7 +185,7 @@ def test_run_converter_build_failure(mock_build_converter, tmp_path):
     assert rc == 2
 
 
-@patch('process.build_converter')
+@patch('src.main.build_converter')
 def test_run_processing_error(mock_build_converter, tmp_path, caplog):
     """Testa o comportamento quando process_file falha."""
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -204,7 +207,7 @@ def test_run_processing_error(mock_build_converter, tmp_path, caplog):
     test_file = inp_dir / "test.pdf"
     test_file.write_text("test content", encoding="utf-8")
     
-    from process import run
+    from src.main import run
     
     # executar com captura de log
     with caplog.at_level(logging.INFO):
@@ -218,7 +221,7 @@ def test_run_processing_error(mock_build_converter, tmp_path, caplog):
 def test_ensure_dir_function(tmp_path):
     """Testa a função ensure_dir."""
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    from process import ensure_dir
+    from src.main import ensure_dir
     
     # Testar criação de diretório que não existe
     new_dir = tmp_path / "nova" / "pasta" / "profunda"
@@ -234,7 +237,7 @@ def test_ensure_dir_function(tmp_path):
 def test_setup_logging_function():
     """Testa a função setup_logging."""
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    from process import setup_logging
+    from src.main import setup_logging
     
     # Testar se as funções executam sem erro
     try:
