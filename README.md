@@ -11,8 +11,10 @@ A robust and scalable solution for converting documents (PDF, DOCX, TXT) to Mark
 - **Structured logging** with configurable levels
 - **High test coverage** with proper mocking
 - **Intuitive CLI interface** with argparse
+- **Modern GUI interface** with Tkinter for user-friendly operation
 - **Robust error handling** and validations
 - **Modular architecture** with reusable functions
+- **Asynchronous processing** to prevent UI freezing
 
 ## Installation
 
@@ -47,27 +49,48 @@ pip install docling pytest pytest-cov
 
 ## Usage
 
-### Basic Command
+### GUI Interface (Recommended)
+
+```bash
+# Launch the graphical interface
+python -m src.gui.gui
+
+# Or alternatively
+cd src && python gui/gui.py
+```
+
+The GUI provides:
+
+- Easy directory selection with browse buttons
+- OCR mode configuration (always/auto/never)
+- Verbose logging toggle
+- Real-time processing log display
+- Progress indication
+- Start/Stop processing controls
+
+### Command Line Interface
+
+#### Basic Command
 
 ```bash
 # Basic processing
-python process.py --input input_documents --output output_texts
+python -m src.main --input input_documents --output output_texts
 
 # Using default directories (entry_files -> textos_saida)
-python process.py
+python -m src.main
 ```
 
 ### Advanced Options
 
 ```bash
 # Verbose mode (DEBUG logging)
-python process.py --input docs/ --output markdown/ --verbose
+python -m src.main --input docs/ --output markdown/ --verbose
 
 # Configure OCR mode
-python process.py --input docs/ --output markdown/ --ocr auto
+python -m src.main --input docs/ --output markdown/ --ocr auto
 
 # Complete help
-python process.py --help
+python -m src.main --help
 ```
 
 ### CLI Parameters
@@ -85,13 +108,22 @@ python process.py --help
 
 ```text
 docling_tool/
-├── process.py          # Main module with processing logic
-├── tests/              # Test suite
-│   ├── conftest.py     # Shared configurations and fixtures
-│   └── test_process.py # Comprehensive tests (9 cases)
-├── pytest.ini         # Pytest configuration
-├── mise.toml          # Python version configuration
-└── README.md          # This documentation
+├── src/                    # Source code package
+│   ├── __init__.py         # Package initialization
+│   ├── main.py             # Main CLI module with processing logic
+│   └── gui/                # GUI package
+│       ├── __init__.py     # GUI package initialization
+│       └── gui.py          # Tkinter GUI interface
+├── tests/                  # Test suite
+│   ├── conftest.py         # Shared configurations and fixtures
+│   ├── test_process.py     # CLI module tests (9 cases)
+│   └── test_gui.py         # GUI module tests (15 cases)
+├── docs/                   # Documentation (future use)
+├── create_sample_files.py  # Utility to create test files
+├── pytest.ini             # Pytest configuration
+├── requirements.txt        # Project dependencies
+├── mise.toml              # Python version configuration
+└── README.md              # This documentation
 ```
 
 ### Main Functions
@@ -122,12 +154,15 @@ pytest tests/ -q
 
 ### Test Coverage
 
-- **9 tests** covering all critical scenarios
+- **24 tests** covering all critical scenarios (CLI + GUI)
 - **94% coverage** of main code
 - **Complete mocking** to avoid external dependencies
 - **Error tests** for robustness
+- **GUI component testing** with Tkinter mocks
 
 ### Tested Scenarios
+
+**CLI Module (9 tests):**
 
 1. Processing with no input files
 2. Basic file processing
@@ -138,6 +173,18 @@ pytest tests/ -q
 7. Processing errors
 8. Directory utilities
 9. Logging configuration
+
+**GUI Module (15 tests):**
+
+1. GUI initialization and configuration
+2. Directory variable management
+3. OCR mode options
+4. Directory browsing functionality
+5. Log clearing functionality
+6. Processing state management
+7. Error handling for invalid directories
+8. Log handler functionality
+9. Integration testing with mocked dependencies
 
 ## Supported Formats
 
@@ -158,8 +205,10 @@ pip install pytest pytest-cov
 # Run tests during development
 pytest tests/ --cov=process --cov-report=html
 
+```bash
 # Check code quality
-python -m py_compile process.py
+python -m py_compile src/main.py src/gui/gui.py
+```
 ```
 
 ### Logging Structure
@@ -209,7 +258,7 @@ pip install pytest pytest-cov --upgrade
 
 ```bash
 # Enable detailed logging
-python process.py --verbose --input docs/ --output markdown/
+python -m src.main --verbose --input docs/ --output markdown/
 ```
 
 ## System Requirements
