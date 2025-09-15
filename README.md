@@ -1,6 +1,6 @@
 # Docling Tool
 
-## Professional tool for batch document processing using docling
+## Tool for batch document processing using docling
 
 A robust and scalable solution for converting documents (PDF, DOCX, TXT) to Markdown using the `docling` library. The project follows Python development best practices with modular architecture, comprehensive testing, and intuitive command-line interface.
 
