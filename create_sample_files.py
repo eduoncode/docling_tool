@@ -6,14 +6,11 @@ from pathlib import Path
 
 def create_sample_files():
     """Cria arquivos de exemplo para testar a GUI."""
-    # Criar diretório temporário
     temp_dir = Path(tempfile.mkdtemp(prefix="docling_test_"))
     
-    # Criar diretório de entrada
     input_dir = temp_dir / "sample_input"
     input_dir.mkdir()
     
-    # Criar arquivos de exemplo
     files_to_create = {
         "sample1.txt": "Este é um arquivo de texto de exemplo.\nEle contém múltiplas linhas.",
         "sample2.pdf": "Conteúdo simulado de PDF (na realidade seria binário)",

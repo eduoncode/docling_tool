@@ -76,7 +76,7 @@ The GUI provides:
 # Basic processing
 python -m src.main --input input_documents --output output_texts
 
-# Using default directories (entry_files -> textos_saida)
+# Using default directories (entry_files -> output_texts)
 python -m src.main
 ```
 
@@ -98,7 +98,7 @@ python -m src.main --help
 | Parameter | Short Form | Default | Description |
 |-----------|------------|---------|-------------|
 | `--input` | `-i` | `entry_files` | Input directory with documents |
-| `--output` | `-o` | `textos_saida` | Output directory for Markdown files |
+| `--output` | `-o` | `output_texts` | Output directory for Markdown files |
 | `--ocr` | - | `always` | OCR mode: `always`, `auto`, `never` |
 | `--verbose` | `-v` | `false` | Enable detailed DEBUG logging |
 
@@ -243,7 +243,7 @@ Error: Directory not found
 ```bash
 # Check if directories exist
 ls -la entry_files/
-mkdir -p entry_files textos_saida
+mkdir -p entry_files output_texts
 ```
 
 Test failures
