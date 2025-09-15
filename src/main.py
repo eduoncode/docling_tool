@@ -77,7 +77,7 @@ def run(argv: Optional[List[str]] = None) -> int:
     """
     parser = argparse.ArgumentParser(description="Processa documentos e extrai Markdown usando docling.")
     parser.add_argument("--input", "-i", type=Path, default=Path("entry_files"), help="Diretório de entrada")
-    parser.add_argument("--output", "-o", type=Path, default=Path("textos_saida"), help="Diretório de saída")
+    parser.add_argument("--output", "-o", type=Path, default=Path("output_texts"), help="Diretório de saída")
     parser.add_argument("--ocr", type=str, default="always", help="Modo OCR (ex: always, auto, never)")
     parser.add_argument("--verbose", "-v", action="store_true", help="Ativa logging DEBUG")
 

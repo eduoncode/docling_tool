@@ -49,7 +49,7 @@ class DoclingGUI:
 
         # Variáveis de controle
         self.input_dir = tk.StringVar(value="entry_files")
-        self.output_dir = tk.StringVar(value="textos_saida")
+        self.output_dir = tk.StringVar(value="output_texts")
         self.ocr_mode = tk.StringVar(value="always")
         self.verbose_mode = tk.BooleanVar(value=False)
         self.processing = False
@@ -67,7 +67,7 @@ class DoclingGUI:
         # Configurar grid weights
         self.root.grid_rowconfigure(0, weight=1)
         self.root.grid_columnconfigure(0, weight=1)
-        main_frame.grid_rowconfigure(4, weight=1)
+        main_frame.grid_rowconfigure(5, weight=1)
         main_frame.grid_columnconfigure(1, weight=1)
 
         # Título
@@ -95,7 +95,7 @@ class DoclingGUI:
             main_frame,
             mode='indeterminate'
         )
-        self.progress_bar.grid(row=5, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(5, 0))
+        self.progress_bar.grid(row=6, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(5, 0))
 
     def _create_directory_section(self, parent: ttk.Frame) -> None:
         """Cria a seção de seleção de diretórios."""
@@ -183,7 +183,7 @@ class DoclingGUI:
     def _create_log_area(self, parent: ttk.Frame) -> None:
         """Cria a área de log."""
         log_frame = ttk.LabelFrame(parent, text="Processing Log", padding="5")
-        log_frame.grid(row=4, column=0, columnspan=3, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(10, 0))
+        log_frame.grid(row=5, column=0, columnspan=3, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(10, 0))
         log_frame.grid_rowconfigure(0, weight=1)
         log_frame.grid_columnconfigure(0, weight=1)
 

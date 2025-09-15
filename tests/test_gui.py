@@ -33,7 +33,7 @@ class TestDoclingGUI:
         
         # Verificar variáveis de controle
         assert app.input_dir.get() == "entry_files"
-        assert app.output_dir.get() == "textos_saida"
+        assert app.output_dir.get() == "output_texts"
         assert app.ocr_mode.get() == "always"
         assert app.verbose_mode.get() == False
         assert app.processing == False
