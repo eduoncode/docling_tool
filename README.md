@@ -209,7 +209,6 @@ pytest tests/ --cov=process --cov-report=html
 # Check code quality
 python -m py_compile src/main.py src/gui/gui.py
 ```
-```
 
 ### Logging Structure
 
